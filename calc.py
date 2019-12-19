@@ -45,7 +45,7 @@ class Shape():
             return new_points
 
         else:
-            return None
+            raise ValueError('Tuple in the formate of (x,y) expected, but not recieved.')
 
     def __sub__(self, other):
         '''Get the distance between the center point of each shape'''
@@ -53,10 +53,13 @@ class Shape():
             return (self.centered_pos_x - other.centered_pos_x, self.centered_pos_y - other.centered_pos_y)
 
 
-square = Shape((1, 1), (1, 2), (2, 2), (2, 1))
-triangle = Shape((4, 4), (6, 4), (5, 6))
-square2 = Shape((5, 1), (5, 2), (6, 2), (6, 1))
+if __name__ == '__main__':
+    square = Shape((1, 1), (1, 2), (2, 2), (2, 1))
+    triangle = Shape((4, 4), (6, 4), (5, 6))
+    square2 = Shape((5, 1), (5, 2), (6, 2), (6, 1))
 
-# print(square)
-# print(triangle)
-# print(square2)
+    square.__add__(1)
+
+    # print(square)
+    # print(triangle)
+    # print(square2)
