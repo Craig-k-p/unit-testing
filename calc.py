@@ -17,44 +17,46 @@ class Shape():
 
     def __str__(self):
         if len(self.points) == 1:
-            return f'A point centered at position {(self.relative_pos_x, self.relative_pos_y)}.'
+            p = (self.centered_pos_x, self.centered_pos_y)
+            return 'A point centered at position {}.'.format(p)
         elif len(self.points) == 2:
-            return f'A line centered at position {(self.relative_pos_x, self.relative_pos_y)}.'
+            p = (self.centered_pos_x, self.centered_pos_y)
+            return 'A line centered at position {}.'.format(p)
         else:
-            return f'{len(self.points)}-sided Shape centered at position {(self.relative_pos_x, self.relative_pos_y)}.'
+            return '{}-sided Shape centered at position {}.'.format(
+                len(self.points), (self.centered_pos_x, self.centered_pos_y)
+            )
 
     def __eq__(self, other):
         '''Return True if the shapes have the same coordinates'''
         if isinstance(other, tuple):
             return self.points.sort() == other.points.sort()
 
-    def __add__(self, other):
+    def __add__(self, transform_xy):
         '''Transform the shape'''
-        if isinstance(other, Shape):
-            if len(self.points) == len(other.points):
-                new_points = []
-                # New sorted tuples
-                s, o = self.points.sorted(), other.points.sorted()
-                for i in range(len(s)):
-                    new_points.append(
-                        # Append tuples like (x1 + x2, y1 + y2) to the new_points list
-                        (s[i][0] + o[i][0], s[i][1] + o[i][1])
-                    )
-                return new_points
+        if isinstance(transform_xy, tuple):
+            x = transform_xy[0]
+            y = transform_xy[1]
+            new_points = []
+            for p in self.points:
+                new_points.append(
+                    (p[0] + x, p[1] + y)
+                )
+            return new_points
 
-            else:
-                return None
+        else:
+            return None
 
     def __sub__(self, other):
         '''Get the distance between the center point of each shape'''
         if isinstance(other, Shape):
-            return (self.relative_pos_x - other.relative_pos_x, self.relative_pos_y - other.relative_pos_y)
+            return (self.centered_pos_x - other.centered_pos_x, self.centered_pos_y - other.centered_pos_y)
 
 
 square = Shape((1, 1), (1, 2), (2, 2), (2, 1))
 triangle = Shape((4, 4), (6, 4), (5, 6))
 square2 = Shape((5, 1), (5, 2), (6, 2), (6, 1))
 
-print(square)
-print(triangle)
-print(square2)
+# print(square)
+# print(triangle)
+# print(square2)
